@@ -1,0 +1,71 @@
+#!/usr/bin/env python3
+
+import argparse
+import requests
+import json
+
+
+def main():
+    args = getArgs()
+
+    if args.cmd == 'merge':
+
+        if(args.func_names is not None):
+            f = args.func_names.split(",")
+            print("Ready to optimize functions: ")
+            print(*f)
+            doRequest("http://localhost:4000/api/v1/testcli",
+                      {"name": f,"type":"f"})
+            exit(1)
+
+        if(args.sequence is not None):
+
+            print("Ready to optimize sequence: " + args.sequence)
+            doRequest("http://localhost:4000/api/v1/action/merge",
+                      {"name": args.sequence,"type":"s"})
+            exit(1)
+
+
+def getArgs():
+
+    parser = argparse.ArgumentParser(
+        description="Merge functions from FaaS environment to optimize execution time")
+
+    parser.add_argument(
+        "cmd",
+        type=str,
+        help="Type command to be executed"
+    )
+
+    parser.add_argument(
+        "-funcs",
+        "--func_names",
+        type=str,
+        help="Type a list of func_names separated by a comma"
+    )
+
+    parser.add_argument(
+        "-seq",
+        "--sequence",
+        type=str,
+        help="Type the name of a sequence on which to perform the optimization"
+    )
+
+    args = parser.parse_args()
+
+    if args.cmd is None:
+        print("Print a command otherwise go away asshole")
+        exit(-1)
+    if args.func_names is None and args.sequence is None:
+        print("Please specify function names or sequence on which to perform optimization")
+        exit(-1)
+    else:
+        return args
+
+
+def doRequest(req_url, json_args):
+	requests.post(req_url, json=json_args)
+
+
+if __name__ == '__main__':
+    main()
