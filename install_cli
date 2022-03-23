@@ -1,0 +1,10 @@
+#!/bin/bash
+
+# must add export PATH=$PATH:~/bin to your ~/.bashrc file 
+# must add export API_HOST_TEST=   to your ~/.bashrc file 
+installare python 3
+pip3 install typer
+sudo chmod +x <client>
+copiare il client in /usr/local/bin/
+
+#mv main ~/usr/local/bin/

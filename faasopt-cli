@@ -3,6 +3,7 @@
 import argparse
 import requests
 import json
+import os
 
 
 def main():
@@ -24,6 +25,9 @@ def main():
             doRequest("http://localhost:4000/api/v1/action/merge",
                       {"name": args.sequence,"type":"s"})
             exit(1)
+    
+    if args.cmd == 'test':
+        print(os.environ['API_TEST'])
 
 
 def getArgs():
@@ -56,10 +60,11 @@ def getArgs():
     if args.cmd is None:
         print("Print a command otherwise go away asshole")
         exit(-1)
-    if args.func_names is None and args.sequence is None:
-        print("Please specify function names or sequence on which to perform optimization")
-        exit(-1)
     else:
+        #if args.func_names is None and args.sequence is None:
+            #print("Please specify function names or sequence on which to perform optimization")
+            #exit(-1)
+        #else:
         return args
 
 
