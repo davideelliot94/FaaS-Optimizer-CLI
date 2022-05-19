@@ -33,10 +33,28 @@ def merge(seq):
 @app.command()
 def invoke(action,params): 
     try:
-        url = "http://" + str(os.environ['API_HOST_TEST']) + "/api/v1/action/invoke-with-params"
-        print(url)
+        url = None
+        if(params == None):
+            url = "http://" + str(os.environ['API_HOST_TEST']) + "/api/v1/action/invoke"
+        else:
+            url = "http://" + str(os.environ['API_HOST_TEST']) + "/api/v1/action/invoke-with-params"
         try:
             response = requests.post(url,json={"name":action ,"params":params})
+            print(response.content)
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+            print("An error occurred performing request")
+            raise SystemExit(e)
+    except KeyError:
+        print("variable not set")
+
+
+@app.command()
+def optimize(sequence,period):
+    try:
+        url = "http://" + str(os.environ['API_HOST_TEST']) + "/api/v1/action/optimize"
+        print(url)
+        try:
+            response = requests.post(url,json={"name":sequence,"period":period})
             print(response.content)
         except requests.exceptions.RequestException as e:  # This is the correct syntax
             print("An error occurred performing request")
