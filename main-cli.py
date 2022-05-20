@@ -19,7 +19,7 @@ def ping():
 @app.command()
 def merge(seq): 
     try:
-        url = "http://" + str(os.environ['API_HOST_TEST']) + "/api/v1/action/mergeV2"
+        url = "http://" + str(os.environ['API_HOST_TEST']) + "/api/v1/action/merge"
         print(url)
         try:
             response = requests.post(url,json={"name":seq})
@@ -47,6 +47,48 @@ def invoke(action,params):
     except KeyError:
         print("variable not set")
 
+@app.command()
+def get(action): 
+    try:
+
+        url = "http://" + str(os.environ['API_HOST_TEST']) + "/api/v1/action/get"
+        try:
+            response = requests.post(url,json={"name":action})
+            print(response.content)
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+            print("An error occurred performing request")
+            raise SystemExit(e)
+    except KeyError:
+        print("variable not set")
+
+@app.command()
+def list(): 
+    try:
+
+        url = "http://" + str(os.environ['API_HOST_TEST']) + "/api/v1/action/list"
+        try:
+            response = requests.post(url)
+            print(response.content)
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+            print("An error occurred performing request")
+            raise SystemExit(e)
+    except KeyError:
+        print("variable not set")
+
+
+@app.command()
+def metrics(action,period):
+    try:
+        url = "http://" + str(os.environ['API_HOST_TEST']) + "/api/v1/metrics/get"
+        print(url)
+        try:
+            response = requests.post(url,json={"name":action,"period":period})
+            print(response.content)
+        except requests.exceptions.RequestException as e:  # This is the correct syntax
+            print("An error occurred performing request")
+            raise SystemExit(e)
+    except KeyError:
+        print("variable not set")
 
 @app.command()
 def optimize(sequence,period):
