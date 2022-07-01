@@ -13,7 +13,7 @@ def ping():
         response = requests.get(url)
         print(response.content)
     except KeyError:
-        print("variable not set")
+        print("API_HOST not set")
 
 @app.command()
 def merge(seq): 
@@ -26,7 +26,7 @@ def merge(seq):
             print("An error occurred performing request")
             print(e)
     except KeyError:
-        print("variable not set")
+        print("API_HOST not set")
 
 @app.command()
 def invoke(action,params): 
@@ -43,7 +43,7 @@ def invoke(action,params):
             print("An error occurred performing request")
             raise SystemExit(e)
     except KeyError:
-        print("variable not set")
+        print("API_HOST not set")
 
 @app.command()
 def get(action): 
@@ -57,7 +57,7 @@ def get(action):
             print("An error occurred performing request")
             raise SystemExit(e)
     except KeyError:
-        print("variable not set")
+        print("API_HOST not set")
 
 @app.command()
 def list(): 
@@ -71,7 +71,7 @@ def list():
             print("An error occurred performing request")
             raise SystemExit(e)
     except KeyError:
-        print("variable not set")
+        print("API_HOST not set")
 
 
 @app.command()
@@ -86,7 +86,7 @@ def metrics(action,period):
             print("An error occurred performing request")
             raise SystemExit(e)
     except KeyError:
-        print("variable not set")
+        print("API_HOST not set")
 
 @app.command()
 def optimize(sequence,period):
@@ -100,7 +100,13 @@ def optimize(sequence,period):
             print("An error occurred performing request")
             raise SystemExit(e)
     except KeyError:
-        print("variable not set")
+        print("API_HOST not set")
+
+@app.command()
+def setHost(host):
+    
+    os.environ['FOPT_API_HOST'] = host
+    return None
 
 if __name__ == "__main__":
     app()

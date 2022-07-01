@@ -5,6 +5,8 @@ sudo apt install python3-pip
 sudo pip3 install typer
 
 sudo chmod +x fopt
+sudo echo 'export FOPT_API_HOST=undefined' >> ~/.bashrc
+sudo echo 'export PATH=$HOME/faas-optimizer/cli:$PATH' >> ~/.bashrc
 
 
 echo '\n\e[32mPlease add the following lines to your .bashrc or your .bash_profile file:\e[0m\n' 
